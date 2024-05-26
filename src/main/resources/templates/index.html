@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<head>
+		<title>kitchensink</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link href="/kitchensink/css/screen.css" rel="stylesheet" />
+	</head>
+
+<body>
+	<div id="container">
+		<div class="dualbrand">
+			<img th:src="@{/gfx/rhjb_eap_logo.png}" width="300" height="175" />
+		</div>
+		<div id="content">
+			<h1>Welcome to JBoss!</h1>
+			<div><p>You have successfully deployed a Jakarta EE Enterprise Application.</p></div>
+			<form th:action="@{/member}" method="post" th:object="${member}" id="reg" enctype="application/x-www-form-urlencoded">
+				<input type="hidden" name="reg" value="reg">
+				<h2>Member Registration</h2>
+				<p>Enforces annotation-based constraints defined on the model class.</p>
+				<table>
+					<tbody>
+						<tr>
+							<td class="titleCell"><label>Name:</label></td>
+							<td><input type="text" th:field="*{name}" /></td>
+							<td><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:errorclass="invalid"></span></td>
+						</tr>
+						<tr>
+							<td class="titleCell"><label>Email:</label></td>
+							<td><input type="text" th:field="*{email}" /></td>
+							<td><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:errorclass="invalid"></span></td>
+						</tr>
+						<tr>
+							<td class="titleCell"><label>Phone #:</label></td>
+							<td><input type="text" th:field="*{phoneNumber}"></td>
+							<td><span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" th:errorclass="invalid"></span></td>
+						</tr>
+					</tbody>
+				</table>
+				<p></p>
+				<table>
+					<tbody>
+					<tr>
+						<td><input type="submit" value="Register" class="register"></td>
+						<td><ul class="messages"><li class="invalid" th:if="${responseMessage}" th:text="${responseMessage}"/> </ul></td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+
+			<h2>Members</h2>
+			<table class="simpletablestyle" dt:table="true">
+				<thead>
+					<tr>
+						<th scope="col">Id</th>
+						<th scope="col">Name</th>
+						<th scope="col">Email</th>
+						<th scope="col">Phone #</th>
+						<th scope="col">REST URL</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr><td colspan="5">
+						REST URL for all members: <a href="/kitchensink/rest/members/">/rest/members</a></td>
+					</tr>
+				</tfoot>
+				<tbody>
+					<tr th:each="member : ${members}">
+						<td th:text="${member.id}" />
+						<td th:text="${member.name}" />
+						<td th:text="${member.email}" />
+						<td th:text="${member.phoneNumber}" />
+						<td><a th:href="@{/rest/members/{id}(id = ${member.id})}" th:text="'/rest/members/' + ${member.id}"/></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="aside">
+			<p>Learn more about Red Hat JBoss Enterprise Application Platform.</p>
+			<ul>
+				<li><a href="https://access.redhat.com/documentation/en/red-hat-jboss-enterprise-application-platform/">Documentation</a></li>
+				<li><a href="http://www.redhat.com/en/technologies/jboss-middleware/application-platform">Product Information</a></li>
+			</ul>
+		</div>
+		<div id="footer">
+			<p>
+				This project was generated from a Maven archetype from
+				JBoss.<br />
+			</p>
+		</div>
+	</div>
+</body>
+</html>
