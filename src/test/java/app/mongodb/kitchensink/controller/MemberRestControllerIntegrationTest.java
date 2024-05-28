@@ -23,10 +23,10 @@ public class MemberRestControllerIntegrationTest {
     @Sql("/test-add-three-members.sql")
     public void testListAllMembers() throws Exception {
         String expected_result = format("""
-                [{"id":2,"name":"Chris Holiday","email":"chris.holiday@test.com","phoneNumber":"0987654321"},\
-                {"id":1,"name":"John Doe","email":"john.doe@test.com","phoneNumber":"1234567890"},\
-                {"id":0,"name":"Sally Smith","email":"sally.smith@test.com","phoneNumber":"2125551212"}]\
-                """);
+            [{"id":0,"name":"Chris Holiday","email":"chris.holiday@test.com","phoneNumber":"0987654321"},\
+            {"id":2,"name":"John Doe","email":"john.doe@test.com","phoneNumber":"1234567890"},\
+            {"id":1,"name":"Sally Smith","email":"sally.smith@test.com","phoneNumber":"2125551212"}]\
+            """);
 
         given().port(port).contentType(ContentType.JSON)
                 .when()
@@ -53,10 +53,10 @@ public class MemberRestControllerIntegrationTest {
     }
 
     @Test
-    @Sql("/test-add-one-member.sql")
+    @Sql("/test-add-three-members.sql")
     public void testLookupMemberById() throws Exception {
         String expected_result = format("""
-                {"id":0,"name":"Sally Smith","email":"bob.smith@test.com","phoneNumber":"2125551212"}\
+                {"id":0,"name":"Chris Holiday","email":"chris.holiday@test.com","phoneNumber":"0987654321"}\
                 """);
 
         given().port(port).contentType(ContentType.JSON)

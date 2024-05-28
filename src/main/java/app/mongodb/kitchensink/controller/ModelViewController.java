@@ -3,7 +3,6 @@ package app.mongodb.kitchensink.controller;
 import app.mongodb.kitchensink.model.Member;
 import app.mongodb.kitchensink.service.MemberRegistrationService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +19,6 @@ public class ModelViewController {
 
     private final MemberRegistrationService memberRegistrationService;
 
-    @Autowired
     private ModelViewController(MemberRegistrationService memberRegistrationService) {
         this.memberRegistrationService = memberRegistrationService;
     }
@@ -35,7 +33,7 @@ public class ModelViewController {
     public String register(@Valid Member member, BindingResult result, Model model) {
         if (result.hasErrors()) {
             populateModelAttributes(model, member);
-            return "/index";
+            return "index";
         }
         return registerNewMember(model, member);
     }
@@ -47,7 +45,7 @@ public class ModelViewController {
         } catch (Exception exception) {
             model.addAttribute(RESPONSE_ATTRIBUTE, exception.getMessage());
             populateModelAttributes(model, member);
-            return "/index";
+            return "index";
         }
     }
 

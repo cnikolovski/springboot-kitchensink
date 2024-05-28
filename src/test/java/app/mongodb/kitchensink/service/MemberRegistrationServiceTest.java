@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,9 +26,11 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 public class MemberRegistrationServiceTest {
 
+    private static final String ATTRIBUTE_NAME = "name";
     private static final String NAME = "Bob Smith";
     private static final String EMAIL = "bob.smith@test.com";
     private static final String PHONE_NUMBER = "5566890410";
+    private static final String MEMBER_ID = "1234567890";
 
     @Mock private MemberRepository memberRepository;
     @InjectMocks private MemberRegistrationService memberRegistrationService;
@@ -42,7 +45,7 @@ public class MemberRegistrationServiceTest {
     @Test
     void testRegisterMemberWithDuplicateEmail() {
         Member member = Member.builder().name(NAME).email(EMAIL).phoneNumber(PHONE_NUMBER).build();
-        given(memberRepository.existsByEmail(EMAIL)).willReturn(member);
+        given(memberRepository.existsByEmail(EMAIL)).willReturn(true);
 
         assertThrows(EmailDuplicateException.class, () -> memberRegistrationService.register_member(member));
         verify(memberRepository, never()).save(member);
@@ -51,7 +54,7 @@ public class MemberRegistrationServiceTest {
     @Test
     void testGetAllMembers() {
         Member member = Member.builder().name(NAME).email(EMAIL).phoneNumber(PHONE_NUMBER).build();
-        given(memberRepository.findAllOrderedByName()).willReturn(Arrays.asList(member));
+        given(memberRepository.findAll(Sort.by(Sort.Direction.ASC, ATTRIBUTE_NAME))).willReturn(Arrays.asList(member));
 
         List<Member> members = memberRegistrationService.getAllMembers();
         assertThat(members.size()).isEqualTo(1);

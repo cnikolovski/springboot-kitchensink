@@ -5,6 +5,7 @@ import app.mongodb.kitchensink.model.Member;
 import app.mongodb.kitchensink.repository.MemberRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import app.mongodb.kitchensink.exception.MemberNotFoundException;
 
@@ -15,6 +16,7 @@ import static java.lang.String.format;
 @Service
 public class MemberRegistrationService {
 
+    private static final String ATTRIBUTE_NAME = "name";
     private final MemberRepository memberRepository;
     private static final Logger logger = LoggerFactory.getLogger(MemberRegistrationService.class);
 
@@ -29,7 +31,7 @@ public class MemberRegistrationService {
     }
 
     public List<Member> getAllMembers() {
-        return memberRepository.findAllOrderedByName();
+        return memberRepository.findAll(Sort.by(Sort.Direction.ASC, ATTRIBUTE_NAME));
     }
 
     public Member getMemberById(Long id) {
@@ -38,8 +40,7 @@ public class MemberRegistrationService {
     }
 
     private void validateMemberDetails(Member member) {
-        Member memberExists = memberRepository.existsByEmail(member.getEmail());
-        if (memberExists != null) {
+        if (memberRepository.existsByEmail(member.getEmail())) {
             throw new EmailDuplicateException("Unique Email Violation");
         }
     }

@@ -17,4 +17,4 @@ In order to deploy this application run the commands below:
 
 ### Endpoints
 
-Please open this endpoint in a browser 'http://localhost:8081/kitchensink/'
+Please open this endpoint in a browser 'http://localhost:8080/kitchensink/'

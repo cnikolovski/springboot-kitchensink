@@ -3,7 +3,6 @@ package app.mongodb.kitchensink.controller;
 import app.mongodb.kitchensink.model.Member;
 import app.mongodb.kitchensink.service.MemberRegistrationService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +19,6 @@ public class MemberRestController {
 
     private final MemberRegistrationService memberRegistrationService;
 
-    @Autowired
     private MemberRestController(MemberRegistrationService memberRegistrationService) {
         this.memberRegistrationService = memberRegistrationService;
     }
