@@ -1,11 +1,12 @@
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+  data:
+    mongodb:
+      database: kitchensink
+      port: 27017
+      host: localhost
+      authentication-database: admin
+      username: admin
+      password: password
 
 server:
   port : 8080

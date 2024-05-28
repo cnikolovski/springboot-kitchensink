@@ -29,7 +29,7 @@ public class MemberRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Member> lookupMemberById(@PathVariable Long id) {
+    public ResponseEntity<Member> lookupMemberById(@PathVariable String id) {
         Member member = memberRegistrationService.getMemberById(id);
         return ResponseEntity.ok(member);
     }

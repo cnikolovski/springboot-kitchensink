@@ -27,14 +27,14 @@ public class MemberRegistrationService {
     public void register_member(Member member) {
         logger.info("Registering " + member.getName());
         validateMemberDetails(member);
-        memberRepository.save(member);
+        memberRepository.insert(member);
     }
 
     public List<Member> getAllMembers() {
         return memberRepository.findAll(Sort.by(Sort.Direction.ASC, ATTRIBUTE_NAME));
     }
 
-    public Member getMemberById(Long id) {
+    public Member getMemberById(String id) {
         return memberRepository.findById(id).orElseThrow(
                 () -> new MemberNotFoundException(format("Member with id: %s not found", id)));
     }

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 
 import java.util.Arrays;
@@ -18,7 +17,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -39,7 +37,7 @@ public class MemberRegistrationServiceTest {
     void testRegisterMember() {
         Member member = Member.builder().name(NAME).email(EMAIL).phoneNumber(PHONE_NUMBER).build();
         memberRegistrationService.register_member(member);
-        verify(memberRepository).save(member);
+        verify(memberRepository).insert(member);
     }
 
     @Test
@@ -48,7 +46,7 @@ public class MemberRegistrationServiceTest {
         given(memberRepository.existsByEmail(EMAIL)).willReturn(true);
 
         assertThrows(EmailDuplicateException.class, () -> memberRegistrationService.register_member(member));
-        verify(memberRepository, never()).save(member);
+        verify(memberRepository, never()).insert(member);
     }
 
     @Test
@@ -71,19 +69,17 @@ public class MemberRegistrationServiceTest {
 
     @Test
     void getMemberByIdNotFound() {
-        Long memberId = Long.valueOf(1);
         Member member = Member.builder().name(NAME).email(EMAIL).phoneNumber(PHONE_NUMBER).build();
-        given(memberRepository.findById(memberId)).willReturn(Optional.ofNullable(member));
+        given(memberRepository.findById(MEMBER_ID)).willReturn(Optional.ofNullable(member));
 
-        Member response = memberRegistrationService.getMemberById(memberId);
+        Member response = memberRegistrationService.getMemberById(MEMBER_ID);
         assertThat(response.getName()).isEqualTo(NAME);
         assertThat(response.getEmail()).isEqualTo(EMAIL);
         assertThat(response.getPhoneNumber()).isEqualTo(PHONE_NUMBER);    }
 
     @Test
     void getMemberById() {
-        Long memberId = Long.valueOf(1);
-        assertThrows(MemberNotFoundException.class, () -> memberRegistrationService.getMemberById(memberId));
+        assertThrows(MemberNotFoundException.class, () -> memberRegistrationService.getMemberById(MEMBER_ID));
     }
 }
 
