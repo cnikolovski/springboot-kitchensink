@@ -23,7 +23,7 @@ public class MemberRestController {
         this.memberRegistrationService = memberRegistrationService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<Member> listAllMembers() {
         return memberRegistrationService.getAllMembers();
     }
@@ -34,10 +34,10 @@ public class MemberRestController {
         return ResponseEntity.ok(member);
     }
 
-	@PostMapping("/")
-	public ResponseEntity<Void> createMember(@Valid @RequestBody Member member) {
-        memberRegistrationService.register_member(member);
+    @PostMapping
+    public ResponseEntity<Void> createMember(@Valid @RequestBody Member member) {
+        memberRegistrationService.registerMember(member);
         return ResponseEntity.ok().build();
-	}
+    }
 
 }

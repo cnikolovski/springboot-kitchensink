@@ -1,6 +1,9 @@
 package app.mongodb.kitchensink.exception;
 
+import app.mongodb.kitchensink.service.MemberRegistrationService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -19,6 +22,8 @@ public class ControllerAdviceHandler {
 
     private static final String EMAIL_TAKEN_ERROR_MESSAGE = "Email taken";
     private static final String EMAIL_PROPERTY = "email";
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemberRegistrationService.class);
+
 
     @ExceptionHandler(value = MemberNotFoundException.class)
     public ResponseEntity<String> handleMemberNotFoundException(MemberNotFoundException ex) {
@@ -29,6 +34,7 @@ public class ControllerAdviceHandler {
     @ExceptionHandler(BindException.class)
     @ResponseBody
     public ResponseEntity<Map<String, String>> handleRequestBodyValidationExceptions(BindException ex) {
+        LOGGER.error("Validation completed. violations found: " + ex.getFieldErrors().size());
         Map<String, String> errorMap = ex.getFieldErrors().stream()
                 .collect(Collectors.toMap(error -> error.getField(), error -> error.getDefaultMessage()));
         return new ResponseEntity<>(errorMap, HttpStatus.BAD_REQUEST);

@@ -29,7 +29,7 @@ public class ModelViewController {
         return "index";
     }
 
-    @PostMapping("/member")
+    @PostMapping("/")
     public String register(@Valid Member member, BindingResult result, Model model) {
         if (result.hasErrors()) {
             populateModelAttributes(model, member);
@@ -40,7 +40,7 @@ public class ModelViewController {
 
     private String registerNewMember(Model model, Member member) {
         try {
-            memberRegistrationService.register_member(member);
+            memberRegistrationService.registerMember(member);
             return "redirect:/";
         } catch (Exception exception) {
             model.addAttribute(RESPONSE_ATTRIBUTE, exception.getMessage());

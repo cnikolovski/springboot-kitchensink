@@ -72,7 +72,7 @@ public class MemberRestControllerIntegrationTest {
 
         given().port(port).contentType(ContentType.JSON)
                 .when()
-                .get(format("/kitchensink/rest/members/"))
+                .get(format("/kitchensink/rest/members"))
                 .then()
                 .statusCode(is(HttpStatus.OK.value()))
                 .body(is(expected_result));
@@ -88,7 +88,7 @@ public class MemberRestControllerIntegrationTest {
         given().port(port).contentType(ContentType.JSON)
                 .body(member)
                 .when()
-                .post(format("/kitchensink/rest/members/"))
+                .post(format("/kitchensink/rest/members"))
                 .then()
                 .statusCode(is(HttpStatus.OK.value()));
     }

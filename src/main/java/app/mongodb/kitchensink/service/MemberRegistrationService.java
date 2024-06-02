@@ -16,16 +16,17 @@ import static java.lang.String.format;
 @Service
 public class MemberRegistrationService {
 
-    private static final String ATTRIBUTE_NAME = "name";
     private final MemberRepository memberRepository;
-    private static final Logger logger = LoggerFactory.getLogger(MemberRegistrationService.class);
+
+    private static final String ATTRIBUTE_NAME = "name";
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemberRegistrationService.class);
 
     public MemberRegistrationService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
-    public void register_member(Member member) {
-        logger.info("Registering " + member.getName());
+    public void registerMember(Member member) {
+        LOGGER.info("Registering " + member.getName());
         validateMemberDetails(member);
         memberRepository.insert(member);
     }

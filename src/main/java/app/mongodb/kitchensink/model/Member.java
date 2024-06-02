@@ -21,11 +21,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "member")
 public class Member {
 
+    private static final int MIN_NAME_SIZE = 1;
+    private static final int MAX_NAME_SIZE = 25;
+    private static final int MIN_PHONE_NUMBER_SIZE = 10;
+    private static final int MAX_PHONE_NUMBER_SIZE = 12;
     @Id
     private String id;
 
     @NotNull
-    @Size(min = 1, max = 25)
+    @Size(min = MIN_NAME_SIZE, max = MAX_NAME_SIZE)
     @Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
     private String name;
 
@@ -35,7 +39,7 @@ public class Member {
     private String email;
 
     @NotNull
-    @Size(min = 10, max = 12)
-    @Digits(fraction = 0, integer = 12)
+    @Size(min = MIN_PHONE_NUMBER_SIZE, max = MAX_PHONE_NUMBER_SIZE)
+    @Digits(fraction = 0, integer = MAX_PHONE_NUMBER_SIZE)
     private String phoneNumber;
 }

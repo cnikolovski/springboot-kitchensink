@@ -36,7 +36,7 @@ public class MemberRegistrationServiceTest {
     @Test
     void testRegisterMember() {
         Member member = Member.builder().name(NAME).email(EMAIL).phoneNumber(PHONE_NUMBER).build();
-        memberRegistrationService.register_member(member);
+        memberRegistrationService.registerMember(member);
         verify(memberRepository).insert(member);
     }
 
@@ -45,7 +45,7 @@ public class MemberRegistrationServiceTest {
         Member member = Member.builder().name(NAME).email(EMAIL).phoneNumber(PHONE_NUMBER).build();
         given(memberRepository.existsByEmail(EMAIL)).willReturn(true);
 
-        assertThrows(EmailDuplicateException.class, () -> memberRegistrationService.register_member(member));
+        assertThrows(EmailDuplicateException.class, () -> memberRegistrationService.registerMember(member));
         verify(memberRepository, never()).insert(member);
     }
 

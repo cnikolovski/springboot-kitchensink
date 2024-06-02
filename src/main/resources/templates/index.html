@@ -16,7 +16,7 @@
 		<div id="content">
 			<h1>Welcome to JBoss!</h1>
 			<div><p>You have successfully deployed a Jakarta EE Enterprise Application.</p></div>
-			<form th:action="@{/member}" method="post" th:object="${member}" id="reg" enctype="application/x-www-form-urlencoded">
+			<form th:action="@{/}" method="post" th:object="${member}" id="reg" enctype="application/x-www-form-urlencoded">
 				<input type="hidden" name="reg" value="reg">
 				<h2>Member Registration</h2>
 				<p>Enforces annotation-based constraints defined on the model class.</p>
@@ -63,7 +63,7 @@
 				</thead>
 				<tfoot>
 					<tr><td colspan="5">
-						REST URL for all members: <a href="/kitchensink/rest/members/">/rest/members</a></td>
+						REST URL for all members: <a href="/kitchensink/rest/members">/rest/members</a></td>
 					</tr>
 				</tfoot>
 				<tbody>
